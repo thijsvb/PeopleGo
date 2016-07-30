@@ -1,12 +1,18 @@
 import ketai.sensors.*;
 KetaiLocation location;
 
-Person person;
+final int nPeople = 3;
+Person[] people = new Person[nPeople];
+final String[] info = loadStrings("info.txt");
 
 void setup() {
   orientation(PORTRAIT);
   fullScreen();
   location = new KetaiLocation(this);
+  
+  for(int i=0; i!=nPeople; ++i){
+    people[i] = new Person(names[i], new Location(names[i]), loadImage(names[i]+".png");
+  }
   person = new Person("Bob", new Location("Bob"), loadImage("Bob.png"));
   person.loc.setLatitude(52.101385);
   person.loc.setLongitude(5.772528);
