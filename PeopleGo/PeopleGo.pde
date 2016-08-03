@@ -1,33 +1,34 @@
 import ketai.sensors.*;
 KetaiLocation location;
 
-final String[] info = loadStrings("info.txt");
-final int nPeople = info.length;
+String[] info;
+int nPeople;
 
-String[] names = new String[nPeople];
-float[] lat = new float[nPeople];
-float[] lon = new float[nPeople];
-Person[] people = new Person[nPeople];
+Person[] people;
 
 void setup() {
   orientation(PORTRAIT);
   fullScreen();
   location = new KetaiLocation(this);
 
+  info = loadStrings("info.txt");
+  nPeople = info.length;
+  people = new Person[nPeople];
+
   for (int i=0; i!=nPeople; ++i) {
-    names[i] = info[i].substring(0, info[i].indexOf(","));
-    lat[i] = float(info[i].substring(info[i].indexOf(",")+1, info[i].indexOf(",", info[i].indexOf(",")+1)));
-    if (Float.isNaN(lat[i])) {
+    String name = info[i].substring(0, info[i].indexOf(","));
+    float lat = float(info[i].substring(info[i].indexOf(",")+1, info[i].indexOf(",", info[i].indexOf(",")+1)));
+    if (Float.isNaN(lat)) {
       println("Person " + i + " has a wrong latitude");
     }
-    lon[i] = float(info[i].substring(info[i].indexOf(",", info[i].indexOf(",")+1)+1));
-    if (Float.isNaN(lon[i])) {
+    float lon = float(info[i].substring(info[i].indexOf(",", info[i].indexOf(",")+1)+1));
+    if (Float.isNaN(lon)) {
       println("Person " + i + " has a wrong longitude");
     }
 
-    people[i] = new Person(names[i], new Location(names[i]), loadImage(names[i]+".png"));
-    people[i].loc.setLatitude(lat[i]);
-    people[i].loc.setLongitude(lon[i]);
+    people[i] = new Person(name, new Location(name), loadImage(name+".png"));
+    people[i].loc.setLatitude(lat);
+    people[i].loc.setLongitude(lon);
   }
 }
 
