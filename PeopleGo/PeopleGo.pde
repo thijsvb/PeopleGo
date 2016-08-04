@@ -9,6 +9,7 @@ Person[] people;
 PFont Lato;
 
 PVector[] nearbyCords;
+int encounter = -1;
 
 void setup() {
   orientation(PORTRAIT);
@@ -50,6 +51,8 @@ void setup() {
 
 void draw() {
   background(0, 255, 128);
+  noStroke();
+  fill(0, 255, 128);
   if (location.getProvider() == "none") {
     text("GPS!", width/2, height/2);
     return;
@@ -60,6 +63,9 @@ void draw() {
 
   for (int i=0; i!=nPeople; ++i) {
     distances[i] = people[i].distance(location);
+    if(distances[i] <= 5){
+      encounter = i;
+    }
     if (distances[i] <= 200) {
       ++nNearby;
     }
@@ -76,9 +82,17 @@ void draw() {
       }
     }
   }
+  
+  if(encounter != -1){
+    if(people[encounter].found){
+      fill(0, 255, 128);
+    } else {
+      fill(66, 106, 108);
+    }
+    textAlign(CENTER, CENTER);
+    text(people[encounter].name, width/2, width/6);
+  }
 
-
-  noStroke();
   fill(255);
   rect(width/20, height/3, width*9/10, height, width/40);
 
@@ -99,6 +113,7 @@ class Person {
   char letter;
   Location loc;
   PImage img;
+  boolean found = false;
 
   Person(String Name, Location Loc, PImage Img) {
     name = Name;
