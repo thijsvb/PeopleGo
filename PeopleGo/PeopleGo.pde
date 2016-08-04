@@ -8,11 +8,22 @@ Person[] people;
 
 PFont Lato;
 
+PVector[] nearbyCords;
+
 void setup() {
   orientation(PORTRAIT);
   fullScreen();
   Lato = createFont("Lato-Regular.ttf", 32);
   textFont(Lato);
+
+  nearbyCords = new PVector[]{
+    new PVector(width/3, height/2), 
+    new PVector(width*2/3, height/2), 
+    new PVector(width/3, height*2/3), 
+    new PVector(width*2/3, height*2/3), 
+    new PVector(width/3, height*5/6), 
+    new PVector(width*2/3, height*5/6)
+  };
 
   location = new KetaiLocation(this);
 
@@ -77,8 +88,10 @@ void draw() {
   text("NEARBY", width/2, height/3+width/20);
   rect(width/3, height/3+width*3/20, width/3, 10, 5);
   textAlign(CENTER, CENTER);
-  text(people[0].letter + ": " + people[0].distance(location) + "m", width/3, height/2);
-  text(people[6].letter + ": " + people[6].distance(location) + "m", width*2/3, height/2);
+  for(int i=0; i!=nNearby; ++i){
+    if(i == 6){return;}
+    text(people[nearby[i]].letter + ": " + people[nearby[i]].distance(location) + "m", nearbyCords[i].x, nearbyCords[i].y);
+  }
 }
 
 class Person {
