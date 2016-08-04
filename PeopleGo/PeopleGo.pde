@@ -6,9 +6,15 @@ int nPeople;
 
 Person[] people;
 
+PFont Lato;
+
 void setup() {
   orientation(PORTRAIT);
   fullScreen();
+  Lato = createFont("Lato-Regular.ttf", 32);
+  textFont(Lato);
+  textSize(width/10);
+  
   location = new KetaiLocation(this);
 
   info = loadStrings("info.txt");
@@ -33,23 +39,34 @@ void setup() {
 }
 
 void draw() {
+  background(0, 255, 128);
   if (location.getProvider() == "none") {
     text("GPS!", width/2, height/2);
     return;
   }
 
-  float distance = round(location.getLocation().distanceTo(people[0].loc));
-  text(distance, width/2, height/2);
+  noStroke();
+  fill(255);
+  rect(width/20, height/3, width*9/10, height, width/40);
+
+  fill(0);
+  text(people[0].letter + ": " + people[0].distance(location) + "m", width/20, height/2);
 }
 
 class Person {
   String name;
+  char letter;
   Location loc;
   PImage img;
 
   Person(String Name, Location Loc, PImage Img) {
     name = Name;
+    letter = name.charAt(0);
     loc = Loc;
     img = Img;
+  }
+  
+  int distance(KetaiLocation kloc){
+    return int(kloc.getLocation().distanceTo(loc));
   }
 }
