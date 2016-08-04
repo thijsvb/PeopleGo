@@ -13,8 +13,7 @@ void setup() {
   fullScreen();
   Lato = createFont("Lato-Regular.ttf", 32);
   textFont(Lato);
-  textSize(width/10);
-  
+
   location = new KetaiLocation(this);
 
   info = loadStrings("info.txt");
@@ -45,12 +44,41 @@ void draw() {
     return;
   }
 
+  int[] distances = new int[nPeople];
+  int nNearby = 0;
+
+  for (int i=0; i!=nPeople; ++i) {
+    distances[i] = people[i].distance(location);
+    if (distances[i] <= 200) {
+      ++nNearby;
+    }
+  }
+
+  int[] sortDist = sort(distances);
+  int[] nearby = new int[nNearby];
+
+  for (int i=0; i!=nNearby; ++i) {
+    for (int j=0; j!=nPeople; ++j) {
+
+      if (sortDist[i] == distances[j]) {
+        nearby[i] = j;
+      }
+    }
+  }
+
+
   noStroke();
   fill(255);
   rect(width/20, height/3, width*9/10, height, width/40);
 
-  fill(0);
-  text(people[0].letter + ": " + people[0].distance(location) + "m", width/20, height/2);
+  fill(66, 106, 108);
+  textAlign(CENTER, TOP);
+  textSize(width/20);
+  text("NEARBY", width/2, height/3+width/20);
+  rect(width/3, height/3+width*3/20, width/3, 10, 5);
+  textAlign(CENTER, CENTER);
+  text(people[0].letter + ": " + people[0].distance(location) + "m", width/3, height/2);
+  text(people[6].letter + ": " + people[6].distance(location) + "m", width*2/3, height/2);
 }
 
 class Person {
@@ -65,8 +93,8 @@ class Person {
     loc = Loc;
     img = Img;
   }
-  
-  int distance(KetaiLocation kloc){
+
+  int distance(KetaiLocation kloc) {
     return int(kloc.getLocation().distanceTo(loc));
   }
 }
