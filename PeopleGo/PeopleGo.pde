@@ -1,3 +1,5 @@
+import android.os.Environment;
+
 import ketai.sensors.*;
 KetaiLocation location;
 
@@ -76,7 +78,7 @@ void draw() {
 
     for (int i=0; i!=nPeople; ++i) {
       distances[i] = people[i].distance(location);
-      if (distances[i] <= 16) {                      //TEST VALUE!!!!!!!!!!!!!
+      if (distances[i] <= 100) {                      //TEST VALUE!!!!!!!!!!!!!
         encounter = i;
       }
       if (distances[i] <= 200) {
@@ -155,11 +157,23 @@ void onTap(float x, float y) {
   if (encounter != -1 && y < height/3 && !shoot) {
     shoot = true;
     cam.start();
-  } else if(shoot && x < width/4 && y > height-width/4) {
+  } else if (shoot && x < width/4 && y > height-width/4) {
     shoot = false;
     cam.stop();
-  } else if(shoot && x < width/2 + width/20 && x > width/2 - width/20 && y > height-width/8-width/20){
-    
+  } else if (shoot && x < width/2 + width/20 && x > width/2 - width/20 && y > height-width/8-width/20) {
+    pushMatrix();
+    rotate(PI/2);
+    cam.resize(height, width);
+    image(cam, 0, -width);
+    popMatrix();
+    image(people[encounter].img, width/4, height/2-width/4);
+    try {
+      save(Environment.getExternalStorageDirectory().getAbsolutePath()+"/PeopleGo/"+people[encounter].name+".png");
+      println("yay");
+    } 
+    catch(Exception e) {
+      println(e);
+    }
   }
 }
 
