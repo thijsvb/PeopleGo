@@ -168,7 +168,9 @@ void onTap(float x, float y) {
     popMatrix();
     image(people[encounter].img, width/4, height/2-width/4);
     try {
-      save(Environment.getExternalStorageDirectory().getAbsolutePath()+"/PeopleGo/"+people[encounter].name+".png");
+      String folder = Environment.getExternalStorageDirectory().getAbsolutePath()+"/PeopleGo/";
+      String filename = new File(folder, people[encounter].name + ".png").getAbsolutePath();
+      save(filename);
       println("yay");
     } 
     catch(Exception e) {
