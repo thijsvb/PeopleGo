@@ -31,7 +31,7 @@ boolean shoot = false;
 boolean screenshot = false;
 float time;
 //These distances are in meters, they're here so you can easily change them
-final float encounterDist = 5;  //distance to a person when you can encounter and find them
+final float encounterDist = 10;  //distance to a person when you can encounter and find them
 final float nearbyDist = 200;  //distace to a persen when the show up on your nearby screen
 
 void setup() {
@@ -54,6 +54,8 @@ void setup() {
   location = new KetaiLocation(this);
   gesture = new KetaiGesture(this);
   cam = new KetaiCamera(this, int(height), int(width), 30);
+  //Also set the updaterate for the location, 5 seconds or 1 meter (the meter thing does not seem to work though, so every 5 sec it is!)
+  location.setUpdateRate(5000,1)
   
   //get info from the info.txt file, the number of lines should be the number of people
   info = loadStrings("info.txt");
