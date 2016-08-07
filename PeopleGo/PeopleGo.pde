@@ -20,6 +20,9 @@ PFont Lato;
 PVector[] nearbyCords;
 int encounter;
 boolean shoot = false;
+boolean screenshot = false;
+float time;
+PImage still;
 
 void setup() {
   orientation(PORTRAIT);
@@ -62,7 +65,19 @@ void setup() {
 }
 
 void draw() {
+  if (screenshot) {    
+    pushMatrix();
+    rotate(PI/2);
+    cam.resize(height, width);
+    image(cam, 0, -width);
+    popMatrix();
+    image(people[encounter].img, width/4, height/2-width/4);
 
+    if (millis()-time >= 10000) {
+      screenshot = false;
+    }
+    return;
+  }
   if (!shoot) {    
     background(0, 255, 128);
     noStroke();
@@ -78,7 +93,7 @@ void draw() {
 
     for (int i=0; i!=nPeople; ++i) {
       distances[i] = people[i].distance(location);
-      if (distances[i] <= 100) {                      //TEST VALUE!!!!!!!!!!!!!
+      if (distances[i] <= 5) {
         encounter = i;
       }
       if (distances[i] <= 200) {
@@ -131,7 +146,9 @@ void draw() {
       cam.resize(height, width);
       image(cam, 0, -width);
       popMatrix();
+
       image(people[encounter].img, width/4, height/2-width/4);
+
       fill(240, 255, 240, 192);
       noStroke();
       ellipse(width/2, height-height/8, height/8, height/8);
@@ -139,6 +156,7 @@ void draw() {
       stroke(66, 106, 108);
       strokeWeight(3);
       ellipse(width/2, height-height/8, height/10, height/10);
+
       noStroke();
       fill(66, 106, 108);
       ellipse(width/8, height-width/8, width/8, width/8);
@@ -160,27 +178,17 @@ void onTap(float x, float y) {
   } else if (shoot && x < width/4 && y > height-width/4) {
     shoot = false;
     cam.stop();
-  } else if (shoot && x < width/2 + width/20 && x > width/2 - width/20 && y > height-width/8-width/20) {
-    pushMatrix();
-    rotate(PI/2);
-    cam.resize(height, width);
-    image(cam, 0, -width);
-    popMatrix();
-    image(people[encounter].img, width/4, height/2-width/4);
-    try {
-      String folder = Environment.getExternalStorageDirectory().getAbsolutePath()+"/PeopleGo/";
-      String filename = new File(folder, people[encounter].name + ".png").getAbsolutePath();
-      save(filename);
-      println("yay");
-    } 
-    catch(Exception e) {
-      println(e);
-    }
+  } else if (shoot && x < width/2 + width/20 && x > width/2 - width/20 && y > height-(height/8+height/20)) {
+    people[encounter].found = true;
+    screenshot = true;
+    time = millis();
   }
 }
 
 void onCameraPreviewEvent() {
-  cam.read();
+  if (!screenshot) {
+    cam.read();
+  }
 }
 
 class Person {
