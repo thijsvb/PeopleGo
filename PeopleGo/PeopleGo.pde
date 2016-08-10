@@ -55,7 +55,7 @@ void setup() {
   gesture = new KetaiGesture(this);
   cam = new KetaiCamera(this, int(height), int(width), 30);
   //Also set the updaterate for the location, 5 seconds or 1 meter (the meter thing does not seem to work though, so every 5 sec it is!)
-  location.setUpdateRate(5000,1)
+  location.setUpdateRate(5000,1);
   
   //get info from the info.txt file, the number of lines should be the number of people
   info = loadStrings("info.txt");
