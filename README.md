@@ -31,5 +31,5 @@ Add your own images in the `data` folder. Make sure the images have the names of
 #### Step 3
 Open the file `info.txt` and delete what is in there now.
 
-### Step 4
+#### Step 4
 For every person, make a line in `info.txt` with their name, their latitude and their longitude with commas inbetween. For example; when you want to add Bob at the Northpole, you should add the line `Bob,90.0,0.0`
