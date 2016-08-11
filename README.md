@@ -22,8 +22,12 @@ To make your own version of the app, you need a couple things:
 * Pictures of them in `png` format (preferebly with transparent backgrounds)
 * The latitude and longitude of the locations you want them to be
 
+#### Step 0
+Clone this repository.
+If you want to test the app without adding people, you can skip ahead to step 5.
+
 #### Step 1
-In the `data` folder remove all the images that are in there now.
+In the `data` folder remove all the images (files that end in `.png`) that are in there now.
 
 #### Step 2
 Add your own images in the `data` folder. Make sure the images have the names of the people you want to add. For example; when you want to add Bob, you should name the image of Bob `Bob.png`.
@@ -33,3 +37,12 @@ Open the file `info.txt` and delete what is in there now.
 
 #### Step 4
 For every person, make a line in `info.txt` with their name, their latitude and their longitude with commas inbetween. For example; when you want to add Bob at the Northpole, you should add the line `Bob,90.0,0.0`. (A good place to get the latitudes and longitudes is [Google Maps](http://maps.google.com))
+
+#### Step 5
+Open the file `PeopleGo.pde` in Processing Android mode.
+
+#### Step 6
+You can change the encounter and nearby distances in line 34 and 35.
+
+#### Step 7
+Connect your phone and run the sketch.
