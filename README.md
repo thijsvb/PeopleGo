@@ -19,7 +19,7 @@ When you tap a person you encounter, you can take a picture with them. However, 
 To make your own version of the app, you need a couple things:
 * [Processing](http://processing.org) with [Android mode](http://android.processing.org)
 * The names of the people you want to add
-* Pictures of them in `png` format (preferebly with transparent backgrounds)
+* Pictures of them in `png` format (preferably with transparent backgrounds)
 * The latitude and longitude of the locations you want them to be
 
 #### Step 0
